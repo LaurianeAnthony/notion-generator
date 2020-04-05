@@ -93,7 +93,7 @@ const IndividualProgressPlan = () => {
           }),
           filter(line => line.assign.includes(selectedUser))
         )(currentWeekTask);
-        console.log(groupByStatus);
+
         const format = string => (string !== undefined ? `${string}\n` : "");
 
         const buildShipped = shippedStatus.reduce((acc, status) => {

@@ -133,7 +133,7 @@ const CsvGlobalSettings = () => {
 
   const loadSetOfSettings = settings =>
     settings.map(setting => updateKey(setting.key, setting.value));
-  console.log(stateKeys);
+
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
