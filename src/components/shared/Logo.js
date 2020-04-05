@@ -18,12 +18,17 @@ const useStyles = makeStyles(theme => ({
 
 const LogoStyled = styled.h1`
     ${({ theme }) => `
-        color: ${theme.palette.primary.light};
+        color: ${theme.palette.secondary.main};
     `}
     ${({ white }) =>
       white &&
       `
         color: #fff;
+    `}
+    ${({ grey, theme }) =>
+      grey &&
+      `
+        color: ${theme.palette.primary.contrastText};
     `}
     ${typography}
     ${space}

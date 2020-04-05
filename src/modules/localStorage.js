@@ -3,9 +3,7 @@ const PREFIX = "ng:";
 export const KEYS = {
   status: "key:status",
   title: "key:title",
-  teammates: "key:teammates",
-  categoryOne: "key:category1",
-  categoryTwo: "key:category2"
+  teammates: "key:teammates"
 };
 
 export const setLocalStorage = (key, value) =>

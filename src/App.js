@@ -13,7 +13,15 @@ import Weekly from "./components/Weekly";
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "dark",
+    primary: {
+      main: "#AEAEAE",
+      contrastText: "#303030"
+    },
+    secondary: {
+      main: "#94ECFF",
+      contrastText: "#303030"
+    }
   }
 });
 

@@ -34,16 +34,16 @@ const Layout = ({ children }) => {
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Logo fontSize={18} mr={20} white />
+          <Logo fontSize={18} mr={20} grey />
           <Button component={Link} to="/individualprogressplan">
             individual 3P
           </Button>
-          <Button component={Link} to="/weekly">
+          {/* <Button component={Link} to="/weekly">
             weekly team
-          </Button>
+          </Button> */}
         </Toolbar>
         <Toolbar>
-          <Button component={Link} to="/csvsettings">
+          <Button color="grey" component={Link} to="/csvsettings">
             <SettingsIcon />
           </Button>
         </Toolbar>

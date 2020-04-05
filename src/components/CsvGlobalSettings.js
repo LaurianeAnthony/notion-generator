@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
-import { Paper, Grid, Select, MenuItem, Button } from "@material-ui/core";
-import { csvAsKeys, extractUniqValueOfKey } from "../modules/csvFormater";
+import {
+  Paper,
+  Grid,
+  Select,
+  MenuItem,
+  Button,
+  Link as MuiLink
+} from "@material-ui/core";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
+
+import {
+  csvAsKeys,
+  extractUniqValueOfKey,
+  csvAsObject
+} from "../modules/csvFormater";
 import CsvDropzone from "./shared/CsvDropzone";
 import {
   setLocalStorage,
@@ -10,6 +24,7 @@ import {
   KEYS
 } from "../modules/localStorage";
 import { Link } from "react-router-dom";
+import { AFFILIATES } from "../modules/defaultSettings";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +44,10 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   title: {
-    marginTop: "0"
+    marginTop: "0",
+    "& small": {
+      fontWeight: "300"
+    }
   },
   SeparatorText: {
     margin: "0 10px"
@@ -50,6 +68,12 @@ const useStyles = makeStyles(theme => ({
     width: "50%",
     minHeight: "40px",
     marginBottom: "20px"
+  },
+  csvLoaded: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "20px"
   }
 }));
 
@@ -65,27 +89,18 @@ const DISPLAY_KEYS = [
   {
     id: KEYS.teammates,
     label: "Team mates key"
-  },
-  {
-    id: KEYS.categoryOne,
-    label: "Category 1 key"
-  },
-  {
-    id: KEYS.categoryTwo,
-    label: "Category 2 key"
   }
 ];
 
 const CsvGlobalSettings = () => {
   const classes = useStyles();
 
+  const [csvData] = useState(csvAsObject());
   const [csvKeys] = useState(csvAsKeys());
   const [stateKeys, setStateKeys] = useState({
     [KEYS.status]: getLocalStorage(KEYS.status),
     [KEYS.title]: getLocalStorage(KEYS.title),
-    [KEYS.teammates]: getLocalStorage(KEYS.teammates),
-    [KEYS.categoryOne]: getLocalStorage(KEYS.categoryOne),
-    [KEYS.categoryTwo]: getLocalStorage(KEYS.categoryTwo)
+    [KEYS.teammates]: getLocalStorage(KEYS.teammates)
   });
   const [currentWeekKey, setCurrentWeekKey] = useState(
     getLocalStorage("key:currentWeek")
@@ -96,6 +111,7 @@ const CsvGlobalSettings = () => {
   const [currentWeekValue, setCurrentWeekValue] = useState(
     getLocalStorage("value:currentWeek")
   );
+  const [displayCsvDropzone, setDisplayCsvDropzone] = useState(false);
 
   const updateKey = (event, key) => {
     setStateKeys({
@@ -115,14 +131,52 @@ const CsvGlobalSettings = () => {
     setLocalStorage("value:currentWeek", event.target.value);
   };
 
-  console.log(currentWeekValue);
+  const loadSetOfSettings = settings =>
+    settings.map(setting => setLocalStorage(setting.key, setting.value));
 
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
-      <CsvDropzone classes={classes} small />
+
+      {csvData.length > 0 && !displayCsvDropzone && (
+        <React.Fragment>
+          <MuiLink
+            href="#"
+            color="secondary"
+            onClick={() => setDisplayCsvDropzone(true)}
+          >
+            Want to upload an other file?
+          </MuiLink>
+          <div className={classes.csvLoaded}>
+            <CheckIcon />
+            <span>CSV data loaded from your local storage</span>
+          </div>
+        </React.Fragment>
+      )}
+      {(!csvData || csvData.length === 0 || displayCsvDropzone) && (
+        <React.Fragment>
+          {csvData.length > 0 && (
+            <MuiLink href="#" onClick={() => setDisplayCsvDropzone(false)}>
+              <CloseIcon />
+            </MuiLink>
+          )}
+          <CsvDropzone classes={classes} small />
+        </React.Fragment>
+      )}
       <Paper className={classes.paperRoot}>
-        <h2 className={classes.title}>Global settings</h2>
+        <h2 className={classes.title}>
+          Global settings{" "}
+          <small>
+            <MuiLink
+              color="secondary"
+              href="#"
+              onClick={() => loadSetOfSettings(AFFILIATES)}
+            >
+              Use Affiliates default settings
+            </MuiLink>
+          </small>
+        </h2>
+
         <Grid container>
           {DISPLAY_KEYS.map(key => (
             <Grid key={key.id} container className={classes.row}>
@@ -184,24 +238,26 @@ const CsvGlobalSettings = () => {
           </Grid>
         </Grid>
       </Paper>
-      <div className={classes.buttons}>
-        <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          to="/individualprogressplan"
-        >
-          individual 3P
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          to="/weekly"
-        >
-          weekly team
-        </Button>
-      </div>
+      {csvData.length > 0 && (
+        <div className={classes.buttons}>
+          <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
+            to="/individualprogressplan"
+          >
+            individual 3P
+          </Button>
+          {/* <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
+            to="/weekly"
+          >
+            weekly team
+          </Button> */}
+        </div>
+      )}
     </div>
   );
 };
