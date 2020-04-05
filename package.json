@@ -2,7 +2,7 @@
   "name": "notion-generator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://LaurianeAnthony.github.io/notion-generator",
+  "homepage": "http://laurianeanthony.github.io/notion-generator",
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
