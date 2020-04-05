@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/notion-generator/precache-manifest.b9b4f244ffb73faa4f3e5a201cab558e.js"
+  "/notion-generator/precache-manifest.3a0c046dad3f3bd5477036f1e63fcfbb.js"
 );
 
 self.addEventListener('message', (event) => {
