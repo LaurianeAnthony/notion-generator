@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Layout from "./components/shared/Layout";
-import CsvDropzone from "./components/CsvDropzone";
+import CsvDropzonePage from "./components/CsvDropzonePage";
 import CsvGlobalSettings from "./components/CsvGlobalSettings";
 import Weekly from "./components/Weekly";
 
@@ -52,7 +52,7 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <CssBaseline />
-                <CsvDropzone />
+                <CsvDropzonePage />
               </Route>
               <Route path="/csvsettings">
                 <CssBaseline />

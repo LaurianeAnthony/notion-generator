@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
+import SettingsIcon from "@material-ui/icons/Settings";
+
 import Logo from "./Logo";
 
 const useStyles = makeStyles(theme => ({
@@ -12,7 +14,10 @@ const useStyles = makeStyles(theme => ({
     width: "100%"
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   content: {
     flexGrow: 1,
@@ -29,12 +34,17 @@ const Layout = ({ children }) => {
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Logo fontSize={20} white />
+          <Logo fontSize={18} mr={20} white />
           <Button component={Link} to="/individualprogressplan">
             individual 3P
           </Button>
           <Button component={Link} to="/weekly">
             weekly team
+          </Button>
+        </Toolbar>
+        <Toolbar>
+          <Button component={Link} to="/csvsettings">
+            <SettingsIcon />
           </Button>
         </Toolbar>
       </AppBar>

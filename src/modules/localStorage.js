@@ -1,7 +1,5 @@
 const PREFIX = "ng:";
 
-const KEY_PREFIX = "key:";
-
 export const KEYS = {
   status: "key:status",
   title: "key:title",

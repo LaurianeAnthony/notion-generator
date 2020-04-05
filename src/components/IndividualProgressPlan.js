@@ -27,7 +27,10 @@ const useStyles = makeStyles(() => ({
   },
   subTitle: {
     marginTop: "40px",
-    marginBottom: "5px"
+    marginBottom: "5px",
+    "& small": {
+      fontWeight: "300"
+    }
   }
 }));
 
@@ -178,7 +181,9 @@ const IndividualProgressPlan = () => {
             </Select>
           )}
           <span>Preview: {lineStructure.map(key => key).join(" / ")}</span>
-          <h4 className={classes.subTitle}>Layout</h4>
+          <h4 className={classes.subTitle}>
+            Layout <small>Select status to display</small>
+          </h4>
           <Grid className={classes.row} container>
             <Grid item xs={3}>
               Shipped

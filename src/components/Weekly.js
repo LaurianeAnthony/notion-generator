@@ -56,7 +56,7 @@ const Weekly = ({ classes }) => {
       )(currentWeekTask);
 
       const format = string => (string !== undefined ? `${string}\n` : "");
-      console.log(Object.keys(groupByStatus));
+
       setResult(
         `*Recap weekly*\n${format(groupByStatus[STATUS.REVIEW])}${format(
           groupByStatus[STATUS.DOING]
@@ -67,10 +67,9 @@ const Weekly = ({ classes }) => {
     }
   }, [csvData, result]);
 
-  // const theme = useTheme();
-  console.log(result);
   return (
     <div>
+      WIP
       <ResultZone result={result} />
     </div>
   );

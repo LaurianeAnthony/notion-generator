@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
 import { Paper, Grid, Select, MenuItem, Button } from "@material-ui/core";
 import { csvAsKeys, extractUniqValueOfKey } from "../modules/csvFormater";
+import CsvDropzone from "./shared/CsvDropzone";
 import {
   setLocalStorage,
   getLocalStorage,
@@ -32,6 +33,23 @@ const useStyles = makeStyles(theme => ({
   },
   SeparatorText: {
     margin: "0 10px"
+  },
+  buttons: {
+    display: "flex",
+    width: "50%",
+    justifyContent: "space-around"
+  },
+  dropZone: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    border: `1px dashed ${theme.palette.grey[500]}`,
+    borderRadius: "3px",
+    padding: "20px",
+    width: "50%",
+    minHeight: "40px",
+    marginBottom: "20px"
   }
 }));
 
@@ -58,7 +76,7 @@ const DISPLAY_KEYS = [
   }
 ];
 
-const CsvDropzone = () => {
+const CsvGlobalSettings = () => {
   const classes = useStyles();
 
   const [csvKeys] = useState(csvAsKeys());
@@ -102,6 +120,7 @@ const CsvDropzone = () => {
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
+      <CsvDropzone classes={classes} small />
       <Paper className={classes.paperRoot}>
         <h2 className={classes.title}>Global settings</h2>
         <Grid container>
@@ -165,12 +184,26 @@ const CsvDropzone = () => {
           </Grid>
         </Grid>
       </Paper>
-
-      <Button variant="contained" component={Link} to="/individualprogressplan">
-        Next
-      </Button>
+      <div className={classes.buttons}>
+        <Button
+          variant="contained"
+          color="primary"
+          component={Link}
+          to="/individualprogressplan"
+        >
+          individual 3P
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          component={Link}
+          to="/weekly"
+        >
+          weekly team
+        </Button>
+      </div>
     </div>
   );
 };
 
-export default CsvDropzone;
+export default CsvGlobalSettings;
