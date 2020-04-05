@@ -2,7 +2,7 @@ import {
   csvAsObject,
   csvAsKeys,
   extractTeamMates,
-  extractUniqvalueOfKey
+  extractUniqValueOfKey
 } from "./csvFormater";
 import { setLocalStorage } from "./localStorage";
 
@@ -53,6 +53,8 @@ describe("csvAsKeys", () => {
 describe("extractTeamMates", () => {
   it("get array of team mates without duplication", () => {
     setLocalStorage("csvData", csvAsText);
+    setLocalStorage("key:teammates", "assign");
+
     expect(extractTeamMates()).toEqual([
       "Lauriane Anthony",
       "Nora Lasri",
@@ -63,12 +65,17 @@ describe("extractTeamMates", () => {
     setLocalStorage("csvData", null);
     expect(extractTeamMates(null)).toEqual([]);
   });
+  it("get empty array if team mates key is not defined in local storage", () => {
+    setLocalStorage("csvData", null);
+    setLocalStorage("key:teammates", null);
+    expect(extractTeamMates(null)).toEqual([]);
+  });
 });
 
 describe("extractUniqValueOfKey", () => {
   it("get list of possibilities of value", () => {
     setLocalStorage("csvData", csvWithStatus);
-    expect(extractUniqvalueOfKey("status")).toEqual([
+    expect(extractUniqValueOfKey("status")).toEqual([
       "Done",
       "Waiting",
       "Archived",
@@ -77,6 +84,6 @@ describe("extractUniqValueOfKey", () => {
   });
   it("get empty array if data null", () => {
     setLocalStorage("csvData", null);
-    expect(extractUniqvalueOfKey("status")).toEqual([]);
+    expect(extractUniqValueOfKey("status")).toEqual([]);
   });
 });

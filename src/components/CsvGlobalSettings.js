@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
 import { Paper, Grid, Select, MenuItem, Button } from "@material-ui/core";
-import { csvAsKeys, extractUniqvalueOfKey } from "../modules/csvFormater";
+import { csvAsKeys, extractUniqValueOfKey } from "../modules/csvFormater";
 import {
   setLocalStorage,
   getLocalStorage,
@@ -73,7 +73,7 @@ const CsvDropzone = () => {
     getLocalStorage("key:currentWeek")
   );
   const [currentWeekValues, setCurrentWeekValues] = useState(
-    extractUniqvalueOfKey(currentWeekKey)
+    extractUniqValueOfKey(currentWeekKey)
   );
   const [currentWeekValue, setCurrentWeekValue] = useState(
     getLocalStorage("value:currentWeek")
@@ -89,7 +89,7 @@ const CsvDropzone = () => {
 
   const onSelectCurrentWeekKey = event => {
     setCurrentWeekKey(event.target.value);
-    setCurrentWeekValues(extractUniqvalueOfKey(event.target.value));
+    setCurrentWeekValues(extractUniqValueOfKey(event.target.value));
     setLocalStorage("key:currentWeek", event.target.value);
   };
   const onSelectCurrentWeekValue = event => {

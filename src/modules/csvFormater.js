@@ -21,7 +21,7 @@ export const csvAsKeys = () => {
 
 export const extractTeamMates = () => {
   const csvData = csvAsObject();
-  const teamMatesKey = getLocalStorage("teamMatesKey") || "assign";
+  const teamMatesKey = getLocalStorage("key:teammates");
   return (
     (csvData &&
       compose(
@@ -35,7 +35,7 @@ export const extractTeamMates = () => {
   );
 };
 
-export const extractUniqvalueOfKey = key => {
+export const extractUniqValueOfKey = key => {
   const csvData = csvAsObject();
   return compose(uniq(), pluck(key))(csvData);
 };
