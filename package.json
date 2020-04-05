@@ -2,6 +2,7 @@
   "name": "notion-generator",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://LaurianeAnthony.github.io/notion-generator",
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "jest": "^24.9.0",
     "jest-localstorage-mock": "^2.4.0"
   }
