@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/notion-generator/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/notion-generator/static/js/main.b8fceeb1.chunk.js",
+    "main.js.map": "/notion-generator/static/js/main.b8fceeb1.chunk.js.map",
+    "runtime-main.js": "/notion-generator/static/js/runtime-main.206ac6c4.js",
+    "runtime-main.js.map": "/notion-generator/static/js/runtime-main.206ac6c4.js.map",
+    "static/js/2.de514a25.chunk.js": "/notion-generator/static/js/2.de514a25.chunk.js",
+    "static/js/2.de514a25.chunk.js.map": "/notion-generator/static/js/2.de514a25.chunk.js.map",
+    "index.html": "/notion-generator/index.html",
+    "precache-manifest.ef1d4b838aab5bb5263b4714107a3256.js": "/notion-generator/precache-manifest.ef1d4b838aab5bb5263b4714107a3256.js",
+    "service-worker.js": "/notion-generator/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/notion-generator/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.de514a25.chunk.js.LICENSE.txt": "/notion-generator/static/js/2.de514a25.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.206ac6c4.js",
+    "static/js/2.de514a25.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.b8fceeb1.chunk.js"
+  ]
+}
