@@ -113,12 +113,12 @@ const CsvGlobalSettings = () => {
   );
   const [displayCsvDropzone, setDisplayCsvDropzone] = useState(false);
 
-  const updateKey = (event, key) => {
+  const updateKey = (key, value) => {
     setStateKeys({
       ...stateKeys,
-      [key]: event.target.value
+      [key]: value
     });
-    setLocalStorage(key, event.target.value);
+    setLocalStorage(key, value);
   };
 
   const onSelectCurrentWeekKey = event => {
@@ -132,8 +132,8 @@ const CsvGlobalSettings = () => {
   };
 
   const loadSetOfSettings = settings =>
-    settings.map(setting => setLocalStorage(setting.key, setting.value));
-
+    settings.map(setting => updateKey(setting.key, setting.value));
+  console.log(stateKeys);
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
@@ -167,13 +167,13 @@ const CsvGlobalSettings = () => {
         <h2 className={classes.title}>
           Global settings{" "}
           <small>
-            <MuiLink
+            <Button
+              variant="contained"
               color="secondary"
-              href="#"
               onClick={() => loadSetOfSettings(AFFILIATES)}
             >
               Use Affiliates default settings
-            </MuiLink>
+            </Button>
           </small>
         </h2>
 
@@ -189,7 +189,7 @@ const CsvGlobalSettings = () => {
                     labelId="keys"
                     id="keys"
                     value={stateKeys[key.id]}
-                    onChange={event => updateKey(event, key.id)}
+                    onChange={event => updateKey(key.id, event.target.value)}
                   >
                     {csvKeys.map(csvKey => (
                       <MenuItem key={csvKey} value={csvKey}>
