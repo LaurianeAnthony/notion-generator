@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "05d8158cdba34cfa0e901bb65851f89f",
+    "revision": "ab8a18f62cce4d57b3d843ba8a572c97",
     "url": "/notion-generator/index.html"
   },
   {
-    "revision": "9745f74bb259eb6e519f",
+    "revision": "ed09b5b6c3e62dcac66a",
     "url": "/notion-generator/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/notion-generator/static/js/2.de514a25.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9745f74bb259eb6e519f",
-    "url": "/notion-generator/static/js/main.b8fceeb1.chunk.js"
+    "revision": "ed09b5b6c3e62dcac66a",
+    "url": "/notion-generator/static/js/main.b8d92416.chunk.js"
   },
   {
     "revision": "13735ed1af5b919bbb8a",
