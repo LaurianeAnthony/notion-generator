@@ -53,7 +53,7 @@ function App() {
   const classes = useStyles();
 
   return (
-    <BrowserRouter basename={window.location.pathname || ""}>
+    <BrowserRouter>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
           <div className={classes.root}>
