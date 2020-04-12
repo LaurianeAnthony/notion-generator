@@ -1,9 +1,3 @@
-
-[build]
-  Command = "yarn build"
-  Functions = "lambda"
-  Publish = "build"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
