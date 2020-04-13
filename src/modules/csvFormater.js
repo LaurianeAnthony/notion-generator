@@ -50,3 +50,17 @@ export const extractUniqValueOfKey = key => {
   const csvData = csvAsObject();
   return compose(uniq(), pluck(key))(csvData);
 };
+
+export const buildLine = (line, type) => {
+  const displayTeammate = getLocalStorage(`${type}:lineStructure:teammate`);
+  const displayStatus = getLocalStorage(`${type}:lineStructure:status`);
+  // const displayCategory = getLocalStorage(`${type}:lineStructure:category`);
+
+  const title = getLocalStorage("key:title");
+  const teammates = getLocalStorage("key:teammates");
+  const status = getLocalStorage("key:status");
+  console.log(line);
+  return `> - [${displayStatus && line[status]}] ${
+    line[title]
+  } @${displayTeammate && line[teammates]}\n`;
+};
