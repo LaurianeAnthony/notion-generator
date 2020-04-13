@@ -1,5 +1,4 @@
 import React from "react";
-import IndividualProgressPlan from "./components/IndividualProgressPlan";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -10,6 +9,8 @@ import Layout from "./components/shared/Layout";
 import CsvDropzonePage from "./components/CsvDropzonePage";
 import CsvGlobalSettings from "./components/CsvGlobalSettings";
 import Weekly from "./components/Weekly";
+import IndividualProgressPlan from "./components/IndividualProgressPlan";
+import TeamProgressPlan from "./components/TeamProgressPlan";
 
 const theme = createMuiTheme({
   palette: {
@@ -69,6 +70,11 @@ function App() {
               <Route path="/individualprogressplan">
                 <Layout appBar>
                   <IndividualProgressPlan />
+                </Layout>
+              </Route>
+              <Route path="/teamprogressplan">
+                <Layout appBar>
+                  <TeamProgressPlan />
                 </Layout>
               </Route>
               <Route path="/weekly">

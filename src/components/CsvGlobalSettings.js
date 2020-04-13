@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
 import {
@@ -74,6 +75,11 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center",
     margin: "20px"
+  },
+  defaultSettingsBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 }));
 
@@ -94,6 +100,7 @@ const DISPLAY_KEYS = [
 
 const CsvGlobalSettings = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [csvData] = useState(csvAsObject());
   const [csvKeys] = useState(csvAsKeys());
@@ -112,6 +119,7 @@ const CsvGlobalSettings = () => {
     getLocalStorage("value:currentWeek")
   );
   const [displayCsvDropzone, setDisplayCsvDropzone] = useState(false);
+  const [displayCustomSettings, setDisplayCustomSettings] = useState(false);
 
   const updateKey = (key, value) => {
     setStateKeys({
@@ -133,7 +141,7 @@ const CsvGlobalSettings = () => {
 
   const loadSetOfSettings = settings =>
     settings.map(setting => updateKey(setting.key, setting.value));
-
+  console.log(history);
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
@@ -145,7 +153,7 @@ const CsvGlobalSettings = () => {
             color="secondary"
             onClick={() => setDisplayCsvDropzone(true)}
           >
-            Want to upload an other file?
+            Upload an other file?
           </MuiLink>
           <div className={classes.csvLoaded}>
             <CheckIcon />
@@ -164,79 +172,92 @@ const CsvGlobalSettings = () => {
         </React.Fragment>
       )}
       <Paper className={classes.paperRoot}>
-        <h2 className={classes.title}>
-          Global settings{" "}
-          <small>
+        <h2 className={classes.title}>Global settings </h2>
+
+        {!displayCustomSettings && (
+          <div className={classes.defaultSettingsBox}>
+            <p>
+              Use a default settings{" "}
+              <MuiLink
+                href="#"
+                color="secondary"
+                onClick={() => setDisplayCustomSettings(true)}
+              >
+                or customize
+              </MuiLink>
+            </p>
             <Button
               variant="contained"
               color="secondary"
               onClick={() => loadSetOfSettings(AFFILIATES)}
             >
-              Use Affiliates default settings
+              Affiliates settings
             </Button>
-          </small>
-        </h2>
+          </div>
+        )}
 
-        <Grid container>
-          {DISPLAY_KEYS.map(key => (
-            <Grid key={key.id} container className={classes.row}>
-              <Grid item xs={6}>
-                {key.label}
+        {displayCustomSettings && (
+          <Grid container>
+            {DISPLAY_KEYS.map(key => (
+              <Grid key={key.id} container className={classes.row}>
+                <Grid item xs={6}>
+                  {key.label}
+                </Grid>
+                <Grid item xs={6}>
+                  {csvKeys.length > 0 && (
+                    <Select
+                      labelId="keys"
+                      id="keys"
+                      value={stateKeys[key.id]}
+                      onChange={event => updateKey(key.id, event.target.value)}
+                    >
+                      {csvKeys.map(csvKey => (
+                        <MenuItem key={csvKey} value={csvKey}>
+                          {csvKey}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                {csvKeys.length > 0 && (
-                  <Select
-                    labelId="keys"
-                    id="keys"
-                    value={stateKeys[key.id]}
-                    onChange={event => updateKey(key.id, event.target.value)}
-                  >
-                    {csvKeys.map(csvKey => (
-                      <MenuItem key={csvKey} value={csvKey}>
-                        {csvKey}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              </Grid>
+            ))}
+
+            <Grid item xs={6}>
+              A task is current week if
             </Grid>
-          ))}
-
-          <Grid item xs={6}>
-            A task is current week if
+            <Grid item xs={6}>
+              {csvKeys.length > 0 && (
+                <Select
+                  labelId="keys"
+                  id="keys"
+                  value={currentWeekKey}
+                  onChange={onSelectCurrentWeekKey}
+                >
+                  {csvKeys.map(csvKey => (
+                    <MenuItem key={csvKey} value={csvKey}>
+                      {csvKey}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+              <span className={classes.SeparatorText}>equals</span>
+              {currentWeekValues.length > 0 && (
+                <Select
+                  labelId="keys"
+                  id="keys"
+                  value={currentWeekValue}
+                  onChange={onSelectCurrentWeekValue}
+                >
+                  {currentWeekValues.map(key => (
+                    <MenuItem key={key} value={key}>
+                      {key}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {csvKeys.length > 0 && (
-              <Select
-                labelId="keys"
-                id="keys"
-                value={currentWeekKey}
-                onChange={onSelectCurrentWeekKey}
-              >
-                {csvKeys.map(csvKey => (
-                  <MenuItem key={csvKey} value={csvKey}>
-                    {csvKey}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-            <span className={classes.SeparatorText}>equals</span>
-            {currentWeekValues.length > 0 && (
-              <Select
-                labelId="keys"
-                id="keys"
-                value={currentWeekValue}
-                onChange={onSelectCurrentWeekValue}
-              >
-                {currentWeekValues.map(key => (
-                  <MenuItem key={key} value={key}>
-                    {key}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          </Grid>
-        </Grid>
+        )}
       </Paper>
       {csvData.length > 0 && (
         <div className={classes.buttons}>
