@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CsvDropzone = ({ big, children }) => {
+const CsvDropzone = ({ big, onComplete, children }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -49,11 +49,12 @@ const CsvDropzone = ({ big, children }) => {
         reader.onload = () => {
           setLocalStorage("csvData", reader.result);
           history.push("/csvsettings");
+          onComplete();
         };
         reader.readAsText(file);
       });
     },
-    [history]
+    [history, onComplete]
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
 import {
@@ -100,10 +99,9 @@ const DISPLAY_KEYS = [
 
 const CsvGlobalSettings = () => {
   const classes = useStyles();
-  const history = useHistory();
 
-  const [csvData] = useState(csvAsObject());
-  const [csvKeys] = useState(csvAsKeys());
+  const [csvData, setCsvData] = useState(csvAsObject());
+  const [csvKeys, setCsvKeys] = useState(csvAsKeys());
   const [stateKeys, setStateKeys] = useState({
     [KEYS.status]: getLocalStorage(KEYS.status),
     [KEYS.title]: getLocalStorage(KEYS.title),
@@ -141,7 +139,7 @@ const CsvGlobalSettings = () => {
 
   const loadSetOfSettings = settings =>
     settings.map(setting => updateKey(setting.key, setting.value));
-  console.log(history);
+
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
@@ -168,7 +166,14 @@ const CsvGlobalSettings = () => {
               <CloseIcon />
             </MuiLink>
           )}
-          <CsvDropzone classes={classes} small />
+          <CsvDropzone
+            onComplete={() => {
+              setCsvData(csvAsObject());
+              setCsvKeys(csvAsKeys());
+            }}
+            classes={classes}
+            small
+          />
         </React.Fragment>
       )}
       <Paper className={classes.paperRoot}>

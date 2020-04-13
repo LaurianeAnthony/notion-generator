@@ -93,7 +93,7 @@ const IndividualProgressPlan = () => {
           }),
           filter(line => line.assign.includes(selectedUser))
         )(currentWeekTask);
-
+        console.log(groupByStatus);
         const format = string => (string !== undefined ? `${string}\n` : "");
 
         const buildShipped = shippedStatus.reduce((acc, status) => {
@@ -157,6 +157,7 @@ const IndividualProgressPlan = () => {
         </Grid>
         <Grid className={classes.settingsGrid} item xs={12} md={5}>
           <h3>Settings</h3>
+
           <h4 className={classes.subTitle}>
             Line structure <small>/!\ Select key in order</small>
           </h4>

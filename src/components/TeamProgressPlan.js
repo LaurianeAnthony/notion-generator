@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { groupBy, pluck, filter, compose, map } from "ramda";
+import { groupBy, pluck, filter, compose, map, sortBy } from "ramda";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,7 +7,6 @@ import { Grid } from "@material-ui/core";
 
 import {
   csvAsObject,
-  extractTeamMates,
   extractUniqValueOfKey,
   csvAsKeys
 } from "../modules/csvFormater";
@@ -59,6 +58,11 @@ const TeamProgressPlan = () => {
       ? getLocalStorage("t3p:lineStructure").split(",")
       : []
   );
+  const [groupLineBy, setGroupLineBy] = useState(
+    getLocalStorage("t3p:groupLineBy")
+      ? getLocalStorage("t3p:groupLineBy").split(",")
+      : []
+  );
   const classes = useStyles();
 
   useEffect(() => {
@@ -76,7 +80,10 @@ const TeamProgressPlan = () => {
         map(currentStatus =>
           compose(
             map(currentProject => pluck("asString", currentProject).join("\n")),
-            groupBy(line => (line.project !== "" ? line.project : "Divers"))
+            groupBy(line =>
+              line[groupLineBy] !== "" ? line[groupLineBy] : "Divers"
+            ),
+            sortBy(line => line[groupLineBy])
           )(currentStatus)
         ),
         groupBy(line => line[statusKey]),
@@ -87,13 +94,13 @@ const TeamProgressPlan = () => {
           };
         })
       )(currentWeekTask);
-      console.log(groupByStatus);
+
       const format = string => (string !== undefined ? `${string}\n` : "");
 
       const buildProgress = progressStatus.reduce((acc, status) => {
         if (groupByStatus[status]) {
           acc += Object.keys(groupByStatus[status]).reduce((acc, project) => {
-            acc += `*${project}*\n`;
+            acc += `\n*${project}*\n`;
             if (groupByStatus[status][project]) {
               acc += format(groupByStatus[status][project]);
             }
@@ -123,6 +130,7 @@ const TeamProgressPlan = () => {
     csvData,
     currentWeekKey,
     currentWeekValue,
+    groupLineBy,
     lineStructure,
     planStatus,
     progressStatus,
@@ -162,6 +170,27 @@ const TeamProgressPlan = () => {
             </Select>
           )}
           <span>Preview: {lineStructure.map(key => key).join(" / ")}</span>
+
+          <h4 className={classes.subTitle}>Group by</h4>
+
+          {csvKeys.length > 0 && (
+            <Select
+              className={classes.input}
+              labelId="groupLineBy"
+              id="groupLineBy"
+              value={groupLineBy}
+              onChange={event => {
+                setGroupLineBy(event.target.value);
+                setLocalStorage("t3p:groupLineBy", event.target.value);
+              }}
+            >
+              {csvKeys.map(value => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
           <h4 className={classes.subTitle}>
             Layout <small>Select status to display</small>
           </h4>

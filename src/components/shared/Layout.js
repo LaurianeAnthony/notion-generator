@@ -41,9 +41,9 @@ const Layout = ({ children }) => {
           <Button component={Link} to="/teamprogressplan">
             team 3P
           </Button>
-          {/* <Button component={Link} to="/weekly">
+          <Button component={Link} to="/weekly">
             weekly team
-          </Button> */}
+          </Button>
         </Toolbar>
         <Toolbar>
           <Button color="grey" component={Link} to="/csvsettings">
