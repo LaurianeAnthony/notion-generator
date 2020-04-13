@@ -2,13 +2,16 @@ import {
   csvAsObject,
   csvAsKeys,
   extractTeamMates,
-  extractUniqValueOfKey
+  extractUniqValueOfKey,
+  buildLine
 } from "./csvFormater";
 import { setLocalStorage } from "./localStorage";
 
 const csvAsText =
   'Name,Assign\nCommuniquer les nouvelles url back aux intégrations,"Lauriane Anthony, Nora Lasri"\n[UI] Tab route navigation,"Jeremy Bouche, Lauriane Anthony"';
 const csvWithStatus = "Status\nDone\nWaiting\nArchived\nDone\nDoing";
+const csvAsTextWithoutAssign =
+  'Name,Assign\nCommuniquer les nouvelles url back aux intégrations,\n[UI] Tab route navigation,"Jeremy Bouche, Lauriane Anthony"';
 
 describe("csvAsObject", () => {
   it("get csv as object", () => {
@@ -60,6 +63,12 @@ describe("extractTeamMates", () => {
       "Nora Lasri",
       "Jeremy Bouche"
     ]);
+  });
+  it("get array of team mates without empty assign", () => {
+    setLocalStorage("csvData", csvAsTextWithoutAssign);
+    setLocalStorage("key:teammates", "assign");
+
+    expect(extractTeamMates()).toEqual(["Jeremy Bouche", "Lauriane Anthony"]);
   });
   it("get empty array if data null", () => {
     setLocalStorage("csvData", null);

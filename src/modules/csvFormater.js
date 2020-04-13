@@ -1,5 +1,14 @@
 import papaparse from "papaparse";
-import { pluck, compose, split, map, flatten, uniq, replace } from "ramda";
+import {
+  pluck,
+  compose,
+  split,
+  map,
+  flatten,
+  uniq,
+  replace,
+  filter
+} from "ramda";
 import { getLocalStorage } from "./localStorage";
 
 export const csvAsObject = () => {
@@ -22,6 +31,7 @@ export const csvAsKeys = () => {
 export const extractTeamMates = () => {
   const csvData = csvAsObject();
   const teamMatesKey = getLocalStorage("key:teammates");
+
   return (
     (csvData &&
       compose(
@@ -29,6 +39,7 @@ export const extractTeamMates = () => {
         flatten(),
         map(split(",")),
         map(replace(/, /g, ",")),
+        filter(string => string !== ""),
         pluck(teamMatesKey)
       )(csvData)) ||
     []
