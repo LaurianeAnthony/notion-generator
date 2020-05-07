@@ -9,23 +9,23 @@ import SettingsIcon from "@material-ui/icons/Settings";
 
 import Logo from "./Logo";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    marginTop: "70px"
+    marginTop: "70px",
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 }));
 
 const Layout = ({ children }) => {
@@ -41,9 +41,9 @@ const Layout = ({ children }) => {
           <Button component={Link} to="/teamprogressplan">
             team 3P
           </Button>
-          <Button component={Link} to="/weekly">
+          {/* <Button component={Link} to="/weekly">
             weekly team
-          </Button>
+          </Button> */}
         </Toolbar>
         <Toolbar>
           <Button color="grey" component={Link} to="/csvsettings">
