@@ -3,14 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Logo from "./shared/Logo";
 import CsvDropzone from "./shared/CsvDropzone";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 const CsvDropzonePage = () => {
@@ -19,7 +19,7 @@ const CsvDropzonePage = () => {
   return (
     <div className={classes.root}>
       <Logo mt={50} mb={100} fontSize={50} />
-      <CsvDropzone big />
+      <CsvDropzone big onComplete={() => {}} />
     </div>
   );
 };

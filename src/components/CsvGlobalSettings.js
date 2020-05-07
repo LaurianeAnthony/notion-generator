@@ -7,7 +7,7 @@ import {
   Select,
   MenuItem,
   Button,
-  Link as MuiLink
+  Link as MuiLink,
 } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
@@ -15,47 +15,47 @@ import CloseIcon from "@material-ui/icons/Close";
 import {
   csvAsKeys,
   extractUniqValueOfKey,
-  csvAsObject
+  csvAsObject,
 } from "../modules/csvFormater";
 import CsvDropzone from "./shared/CsvDropzone";
 import {
   setLocalStorage,
   getLocalStorage,
-  KEYS
+  KEYS,
 } from "../modules/localStorage";
 import { Link } from "react-router-dom";
-import { AFFILIATES } from "../modules/defaultSettings";
+import { AFFILIATES, SOCIAL } from "../modules/defaultSettings";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   paperRoot: {
     width: "50%",
     padding: "20px",
-    marginBottom: "30px"
+    marginBottom: "30px",
   },
   row: {
     marginBottom: "20px",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
     marginTop: "0",
     "& small": {
-      fontWeight: "300"
-    }
+      fontWeight: "300",
+    },
   },
   SeparatorText: {
-    margin: "0 10px"
+    margin: "0 10px",
   },
   buttons: {
     display: "flex",
     width: "50%",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   dropZone: {
     display: "flex",
@@ -67,34 +67,40 @@ const useStyles = makeStyles(theme => ({
     padding: "20px",
     width: "50%",
     minHeight: "40px",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   csvLoaded: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: "20px"
+    margin: "20px",
   },
   defaultSettingsBox: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
+  ButtonsWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
 }));
 
 const DISPLAY_KEYS = [
   {
     id: KEYS.status,
-    label: "Status key"
+    label: "Status key",
   },
   {
     id: KEYS.title,
-    label: "Title key"
+    label: "Title key",
   },
   {
     id: KEYS.teammates,
-    label: "Team mates key"
-  }
+    label: "Team mates key",
+  },
 ];
 
 const CsvGlobalSettings = () => {
@@ -105,7 +111,7 @@ const CsvGlobalSettings = () => {
   const [stateKeys, setStateKeys] = useState({
     [KEYS.status]: getLocalStorage(KEYS.status),
     [KEYS.title]: getLocalStorage(KEYS.title),
-    [KEYS.teammates]: getLocalStorage(KEYS.teammates)
+    [KEYS.teammates]: getLocalStorage(KEYS.teammates),
   });
   const [currentWeekKey, setCurrentWeekKey] = useState(
     getLocalStorage("key:currentWeek")
@@ -122,23 +128,23 @@ const CsvGlobalSettings = () => {
   const updateKey = (key, value) => {
     setStateKeys({
       ...stateKeys,
-      [key]: value
+      [key]: value,
     });
     setLocalStorage(key, value);
   };
 
-  const onSelectCurrentWeekKey = event => {
+  const onSelectCurrentWeekKey = (event) => {
     setCurrentWeekKey(event.target.value);
     setCurrentWeekValues(extractUniqValueOfKey(event.target.value));
     setLocalStorage("key:currentWeek", event.target.value);
   };
-  const onSelectCurrentWeekValue = event => {
+  const onSelectCurrentWeekValue = (event) => {
     setCurrentWeekValue(event.target.value);
     setLocalStorage("value:currentWeek", event.target.value);
   };
 
-  const loadSetOfSettings = settings =>
-    settings.map(setting => updateKey(setting.key, setting.value));
+  const loadSetOfSettings = (settings) =>
+    settings.map((setting) => updateKey(setting.key, setting.value));
 
   return (
     <div className={classes.root}>
@@ -191,19 +197,28 @@ const CsvGlobalSettings = () => {
                 or customize
               </MuiLink>
             </p>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => loadSetOfSettings(AFFILIATES)}
-            >
-              Affiliates settings
-            </Button>
+            <div className={classes.ButtonsWrapper}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => loadSetOfSettings(AFFILIATES)}
+              >
+                Affiliates settings
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => loadSetOfSettings(SOCIAL)}
+              >
+                Social settings
+              </Button>
+            </div>
           </div>
         )}
 
         {displayCustomSettings && (
           <Grid container>
-            {DISPLAY_KEYS.map(key => (
+            {DISPLAY_KEYS.map((key) => (
               <Grid key={key.id} container className={classes.row}>
                 <Grid item xs={6}>
                   {key.label}
@@ -214,9 +229,11 @@ const CsvGlobalSettings = () => {
                       labelId="keys"
                       id="keys"
                       value={stateKeys[key.id]}
-                      onChange={event => updateKey(key.id, event.target.value)}
+                      onChange={(event) =>
+                        updateKey(key.id, event.target.value)
+                      }
                     >
-                      {csvKeys.map(csvKey => (
+                      {csvKeys.map((csvKey) => (
                         <MenuItem key={csvKey} value={csvKey}>
                           {csvKey}
                         </MenuItem>
@@ -238,7 +255,7 @@ const CsvGlobalSettings = () => {
                   value={currentWeekKey}
                   onChange={onSelectCurrentWeekKey}
                 >
-                  {csvKeys.map(csvKey => (
+                  {csvKeys.map((csvKey) => (
                     <MenuItem key={csvKey} value={csvKey}>
                       {csvKey}
                     </MenuItem>
@@ -253,7 +270,7 @@ const CsvGlobalSettings = () => {
                   value={currentWeekValue}
                   onChange={onSelectCurrentWeekValue}
                 >
-                  {currentWeekValues.map(key => (
+                  {currentWeekValues.map((key) => (
                     <MenuItem key={key} value={key}>
                       {key}
                     </MenuItem>
@@ -274,14 +291,14 @@ const CsvGlobalSettings = () => {
           >
             individual 3P
           </Button>
-          {/* <Button
+          <Button
             variant="contained"
             color="secondary"
             component={Link}
-            to="/weekly"
+            to="/teamprogressplan"
           >
-            weekly team
-          </Button> */}
+            team 3P
+          </Button>
         </div>
       )}
     </div>
