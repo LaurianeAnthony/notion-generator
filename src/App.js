@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -11,6 +11,8 @@ import CsvGlobalSettings from "./components/CsvGlobalSettings";
 import Weekly from "./components/Weekly";
 import IndividualProgressPlan from "./components/IndividualProgressPlan";
 import TeamProgressPlan from "./components/TeamProgressPlan";
+import { setLocalStorage, getLocalStorage } from "./modules/localStorage";
+import { AFFILIATES_2 } from "./modules/defaultSettings";
 
 const theme = createMuiTheme({
   palette: {
@@ -50,43 +52,57 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
+export const StateContext = createContext();
+
 function App() {
   const classes = useStyles();
+  const [settingsType] = useState(getLocalStorage("settingsType"));
+  const [settings, setSettings] = useState(
+    JSON.parse(getLocalStorage("settings"))
+  );
+
+  useEffect(() => {
+    console.log("here", settings);
+    // setLocalStorage("settingsType", "custom");
+    // setLocalStorage("settings", JSON.stringify(settings));
+  }, [settings]);
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <div className={classes.root}>
-            <Switch>
-              <Route exact path="/">
-                <CssBaseline />
-                <CsvDropzonePage />
-              </Route>
-              <Route path="/csvsettings">
-                <CssBaseline />
-                <CsvGlobalSettings />
-              </Route>
-              <Route path="/individualprogressplan">
-                <Layout appBar>
-                  <IndividualProgressPlan />
-                </Layout>
-              </Route>
-              <Route path="/teamprogressplan">
-                <Layout appBar>
-                  <TeamProgressPlan />
-                </Layout>
-              </Route>
-              <Route path="/weekly">
-                <Layout appBar>
-                  <Weekly />
-                </Layout>
-              </Route>
-            </Switch>
-          </div>
-        </StyledThemeProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <StateContext.Provider value={{ settings, setSettings }}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <StyledThemeProvider theme={theme}>
+            <div className={classes.root}>
+              <Switch>
+                <Route exact path="/">
+                  <CssBaseline />
+                  <CsvDropzonePage />
+                </Route>
+                <Route path="/csvsettings">
+                  <CssBaseline />
+                  <CsvGlobalSettings />
+                </Route>
+                <Route path="/individualprogressplan">
+                  <Layout appBar>
+                    <IndividualProgressPlan />
+                  </Layout>
+                </Route>
+                <Route path="/teamprogressplan">
+                  <Layout appBar>
+                    <TeamProgressPlan />
+                  </Layout>
+                </Route>
+                <Route path="/weekly">
+                  <Layout appBar>
+                    <Weekly />
+                  </Layout>
+                </Route>
+              </Switch>
+            </div>
+          </StyledThemeProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </StateContext.Provider>
   );
 }
 

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
-import { getLocalStorage, setLocalStorage } from "../../modules/localStorage";
+import {
+  getLocalStorage,
+  getLocalStorageAsBoolean,
+  setLocalStorage
+} from "../../modules/localStorage";
 import { csvAsKeys } from "../../modules/csvFormater";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
-import { update } from "ramda";
+import { StateContext } from "../../App";
 
 const useStyles = makeStyles(() => ({
   settingsGrid: {
@@ -29,23 +33,40 @@ const useStyles = makeStyles(() => ({
 
 const SettingsLineStructure = ({ type }) => {
   const localStorageKey = `${type}:lineStructure`;
-  console.log(localStorageKey);
+
+  const { settings, setSettings } = useContext(StateContext);
+  console.log(settings);
+  //   console.log(type, settings, settings[type].lineFormat);
+  const { teammates, status, category } = {};
+
   const classes = useStyles();
-  const [csvKeys] = useState(csvAsKeys());
-  const [lineStructure, setLineStructure] = useState(
-    getLocalStorage(localStorageKey)
-      ? getLocalStorage(localStorageKey).split(",")
-      : []
-  );
-  const [displayTeammate, setDisplayTeammate] = useState(
-    getLocalStorage(`${localStorageKey}:teammate`)
-  );
-  const [displayStatus, setDisplayStatus] = useState(
-    getLocalStorage(`${localStorageKey}:status`)
-  );
-  const [displayCategory, setDisplayCategory] = useState(
-    getLocalStorage(`${localStorageKey}:category`)
-  );
+  //   const [csvKeys] = useState(csvAsKeys());
+  //   const [lineStructure, setLineStructure] = useState(
+  //     getLocalStorage(localStorageKey)
+  //       ? getLocalStorage(localStorageKey).split(",")
+  //       : []
+  //   );
+  //   const [displayTeammate, setDisplayTeammate] = useState(
+  //     getLocalStorageAsBoolean(`${localStorageKey}:teammate`)
+  //   );
+
+  //   const [displayStatus, setDisplayStatus] = useState(
+  //     getLocalStorageAsBoolean(`${localStorageKey}:status`)
+  //   );
+  //   const [displayCategory, setDisplayCategory] = useState(
+  //     getLocalStorageAsBoolean(`${localStorageKey}:category`)
+  //   );
+
+  const updateLineFormat = (key, value) => {
+    console.log(key, value);
+    return setSettings({
+      ...settings,
+      [type]: {
+        ...settings[type],
+        lineFormat: { ...settings[type].lineFormat, [key]: value }
+      }
+    });
+  };
 
   return (
     <div>
@@ -76,10 +97,11 @@ const SettingsLineStructure = ({ type }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={displayCategory}
+            checked={category}
             onChange={() => {
-              setDisplayCategory(!displayCategory);
-              setLocalStorage(`${localStorageKey}:category`, !displayCategory);
+              updateLineFormat("category", !category);
+              //   setDisplayCategory(!displayCategory);
+              //   setLocalStorage(`${localStorageKey}:category`, !displayCategory);
             }}
             name="category"
           />
@@ -89,10 +111,11 @@ const SettingsLineStructure = ({ type }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={displayStatus}
+            checked={status}
             onChange={() => {
-              setDisplayStatus(!displayStatus);
-              setLocalStorage(`${localStorageKey}:status`, !displayStatus);
+              updateLineFormat("status", !status);
+              //   setDisplayStatus(!displayStatus);
+              //   setLocalStorage(`${localStorageKey}:status`, !displayStatus);
             }}
             name="status"
           />
@@ -102,10 +125,11 @@ const SettingsLineStructure = ({ type }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={displayTeammate}
+            checked={teammates}
             onChange={() => {
-              setDisplayTeammate(!displayTeammate);
-              setLocalStorage(`${localStorageKey}:teammate`, !displayTeammate);
+              updateLineFormat("teammates", !teammates);
+              //   setDisplayTeammate(!displayTeammate);
+              //   setLocalStorage(`${localStorageKey}:teammate`, !displayTeammate);
             }}
             name="teammate"
           />
@@ -113,8 +137,8 @@ const SettingsLineStructure = ({ type }) => {
         label="Teammate"
       />
       <p>
-        Preview: {displayCategory && "[category]"} {displayStatus && "[status]"}{" "}
-        Title {displayTeammate && "@Teammate"}
+        Preview: {category && "[category]"} {status && "[status]"} Title{" "}
+        {teammates && "@Teammate"}
       </p>
     </div>
   );

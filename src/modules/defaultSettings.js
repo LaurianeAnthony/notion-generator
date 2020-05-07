@@ -18,3 +18,34 @@ export const AFFILIATES = [
   { key: "w:status", value: "To do,Review" },
   { key: "w:groupLineBy", value: "project" }
 ];
+
+export const AFFILIATES_2 = {
+  status: "status",
+  title: "title",
+  teammate: "assign",
+  currentWeek: {
+    key: "current_week",
+    value: "Yes"
+  },
+  i3p: {
+    shippedStatus: ["Done"],
+    lineStructure: ["app", "name"],
+    planStatus: ["To do", "Waiting", "Inbox"],
+    progressStatus: ["Doing", "Review"],
+    lineFormat: {
+      teammates: false,
+      status: true,
+      category: true
+    }
+  },
+  t3p: {
+    lineStructure: ["name", "assign"],
+    planStatus: ["To do", "Waiting", "Inbox"],
+    progressStatus: ["Doing", "Doing"],
+    groupLineBy: "project"
+  },
+  weekly: {
+    status: ["To do", "Review"],
+    groupLineBy: "project"
+  }
+};

@@ -24,7 +24,7 @@ import {
   KEYS
 } from "../modules/localStorage";
 import { Link } from "react-router-dom";
-import { AFFILIATES } from "../modules/defaultSettings";
+import { AFFILIATES, AFFILIATES_2 } from "../modules/defaultSettings";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -186,7 +186,10 @@ const CsvGlobalSettings = () => {
               <MuiLink
                 href="#"
                 color="secondary"
-                onClick={() => setDisplayCustomSettings(true)}
+                onClick={() => {
+                  setLocalStorage("settingsType", "custom");
+                  setDisplayCustomSettings(true);
+                }}
               >
                 or customize
               </MuiLink>
@@ -194,7 +197,12 @@ const CsvGlobalSettings = () => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => loadSetOfSettings(AFFILIATES)}
+              onClick={() => {
+                setLocalStorage("settingsType", "affiliates");
+                setLocalStorage("settings", JSON.stringify(AFFILIATES_2));
+
+                loadSetOfSettings(AFFILIATES);
+              }}
             >
               Affiliates settings
             </Button>

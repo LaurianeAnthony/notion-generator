@@ -9,7 +9,7 @@ import {
   replace,
   filter
 } from "ramda";
-import { getLocalStorage } from "./localStorage";
+import { getLocalStorage, getLocalStorageAsBoolean } from "./localStorage";
 
 export const csvAsObject = () => {
   const csvAsText = getLocalStorage("csvData");
@@ -52,15 +52,20 @@ export const extractUniqValueOfKey = key => {
 };
 
 export const buildLine = (line, type) => {
-  const displayTeammate = getLocalStorage(`${type}:lineStructure:teammate`);
-  const displayStatus = getLocalStorage(`${type}:lineStructure:status`);
-  // const displayCategory = getLocalStorage(`${type}:lineStructure:category`);
+  const displayTeammate = getLocalStorageAsBoolean(
+    `${type}:lineStructure:teammate`
+  );
+  const displayStatus = getLocalStorageAsBoolean(
+    `${type}:lineStructure:status`
+  );
 
+  console.log("here");
+  // const displayCategory = getLocalStorage(`${type}:lineStructure:category`);
   const title = getLocalStorage("key:title");
   const teammates = getLocalStorage("key:teammates");
   const status = getLocalStorage("key:status");
-  console.log(line);
-  return `> - [${displayStatus && line[status]}] ${
-    line[title]
-  } @${displayTeammate && line[teammates]}\n`;
+
+  return `> - ${displayStatus ? `[${line[status]}] ` : ""}${line[title]}${
+    displayTeammate ? ` @${line[teammates]}` : ""
+  }\n`;
 };

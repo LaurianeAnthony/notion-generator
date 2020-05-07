@@ -9,9 +9,11 @@ import {
   csvAsObject,
   extractTeamMates,
   extractUniqValueOfKey,
-  csvAsKeys
+  csvAsKeys,
+  buildLine
 } from "../modules/csvFormater";
 import ResultZone from "./shared/ResultZone";
+import SettingsLineStructure from "./shared/SettingsLineStructure";
 import { getLocalStorage, setLocalStorage } from "../modules/localStorage";
 
 const useStyles = makeStyles(() => ({
@@ -79,21 +81,18 @@ const IndividualProgressPlan = () => {
         setUsers(users);
         setSelectedUser(users[0]);
       } else {
-        const buildLine = line =>
-          `> - ${lineStructure.map(key => line[key]).join(" / ")}`;
-
         const groupByStatus = compose(
-          map(currentStatus => pluck("asString", currentStatus).join("\n")),
+          map(currentStatus => pluck("asString", currentStatus).join("")),
           groupBy(line => line[statusKey]),
           map(line => {
             return {
               ...line,
-              asString: buildLine(line)
+              asString: buildLine(line, "i3p")
             };
           }),
           filter(line => line.assign.includes(selectedUser))
         )(currentWeekTask);
-        console.log(groupByStatus);
+
         const format = string => (string !== undefined ? `${string}\n` : "");
 
         const buildShipped = shippedStatus.reduce((acc, status) => {
@@ -157,6 +156,8 @@ const IndividualProgressPlan = () => {
         </Grid>
         <Grid className={classes.settingsGrid} item xs={12} md={5}>
           <h3>Settings</h3>
+
+          <SettingsLineStructure type="i3p" />
 
           <h4 className={classes.subTitle}>
             Line structure <small>/!\ Select key in order</small>

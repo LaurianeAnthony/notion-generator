@@ -98,25 +98,52 @@ describe("extractUniqValueOfKey", () => {
 });
 
 describe("buildLine", () => {
-  it("return string according to settings in local storage", () => {
-    setLocalStorage("i3p:lineStructure:teammate", true);
-    setLocalStorage("i3p:lineStructure:status", true);
-    setLocalStorage("i3p:lineStructure:category", true);
-
+  beforeEach(() => {
     setLocalStorage("key:title", "name");
     setLocalStorage("key:teammates", "assign");
     setLocalStorage("key:status", "status");
+  });
 
-    console.log("------Build");
+  it("return string with teammate and status", () => {
+    setLocalStorage("i3p:lineStructure:teammate", "true");
+    setLocalStorage("i3p:lineStructure:status", "true");
 
     const line = {
       name: "Communiquer les nouvelles url back aux intégrations",
       status: "Doing",
       assign: "Lauriane Anthony"
     };
-    console.log(buildLine(line, "i3p").asString);
+
     expect(buildLine(line, "i3p")).toEqual(
       "> - [Doing] Communiquer les nouvelles url back aux intégrations @Lauriane Anthony\n"
+    );
+  });
+  it("return string with teamate", () => {
+    setLocalStorage("i3p:lineStructure:teammate", "true");
+    setLocalStorage("i3p:lineStructure:status", "false");
+
+    const line = {
+      name: "Communiquer les nouvelles url back aux intégrations",
+      status: "Doing",
+      assign: "Lauriane Anthony"
+    };
+
+    expect(buildLine(line, "i3p")).toEqual(
+      "> - Communiquer les nouvelles url back aux intégrations @Lauriane Anthony\n"
+    );
+  });
+  it("return string with status", () => {
+    setLocalStorage("i3p:lineStructure:teammate", "false");
+    setLocalStorage("i3p:lineStructure:status", "true");
+
+    const line = {
+      name: "Communiquer les nouvelles url back aux intégrations",
+      status: "Doing",
+      assign: "Lauriane Anthony"
+    };
+
+    expect(buildLine(line, "i3p")).toEqual(
+      "> - [Doing] Communiquer les nouvelles url back aux intégrations\n"
     );
   });
 });
