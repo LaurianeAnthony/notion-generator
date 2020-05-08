@@ -7,7 +7,8 @@ import {
   flatten,
   uniq,
   replace,
-  filter
+  filter,
+  path,
 } from "ramda";
 import { getLocalStorage } from "./localStorage";
 
@@ -17,7 +18,7 @@ export const csvAsObject = () => {
     (csvAsText &&
       papaparse.parse(csvAsText, {
         header: true,
-        transformHeader: header => header.toLowerCase().replace(" ", "_")
+        transformHeader: (header) => header.toLowerCase().replace(" ", "_"),
       }).data) ||
     []
   );
@@ -28,9 +29,8 @@ export const csvAsKeys = () => {
   return (csvData && csvData.length > 0 && Object.keys(csvData[0])) || [];
 };
 
-export const extractTeamMates = () => {
+export const extractTeamMates = (teamMatesKey) => {
   const csvData = csvAsObject();
-  const teamMatesKey = getLocalStorage("key:teammates");
 
   return (
     (csvData &&
@@ -39,14 +39,29 @@ export const extractTeamMates = () => {
         flatten(),
         map(split(",")),
         map(replace(/, /g, ",")),
-        filter(string => string !== ""),
+        filter((string) => string !== ""),
         pluck(teamMatesKey)
       )(csvData)) ||
     []
   );
 };
 
-export const extractUniqValueOfKey = key => {
+export const extractUniqValueOfKey = (key) => {
   const csvData = csvAsObject();
   return compose(uniq(), pluck(key))(csvData);
+};
+
+export const buildLine = (line, type, settings) => {
+  const displayTeammate = path([type, "lineFormat", "teammates"], settings);
+  const displayStatus = path([type, "lineFormat", "status"], settings);
+  const displayCategory = path([type, "lineFormat", "category"], settings);
+
+  const title = settings.title;
+  const teammates = settings.teammates;
+  const status = settings.status;
+  const category = settings.category;
+
+  return `- ${displayCategory ? `[${line[category]}] ` : ""}${
+    displayStatus ? `[${line[status]}] ` : ""
+  }${line[title]}${displayTeammate ? ` @${line[teammates]}` : ""}`;
 };
