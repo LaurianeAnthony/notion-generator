@@ -12,59 +12,57 @@ import Weekly from "./components/Weekly";
 import IndividualProgressPlan from "./components/IndividualProgressPlan";
 import TeamProgressPlan from "./components/TeamProgressPlan";
 import { setLocalStorage, getLocalStorage } from "./modules/localStorage";
-import { AFFILIATES_2 } from "./modules/defaultSettings";
+import { defaultSettings } from "./modules/defaultSettings";
 
 const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
       main: "#AEAEAE",
-      contrastText: "#303030"
+      contrastText: "#303030",
     },
     secondary: {
       main: "#94ECFF",
-      contrastText: "#303030"
-    }
-  }
+      contrastText: "#303030",
+    },
+  },
 });
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
 }));
 
 export const StateContext = createContext();
 
 function App() {
   const classes = useStyles();
-  const [settingsType] = useState(getLocalStorage("settingsType"));
   const [settings, setSettings] = useState(
-    JSON.parse(getLocalStorage("settings"))
+    JSON.parse(getLocalStorage("settings")) || defaultSettings.initial
   );
 
   useEffect(() => {
-    console.log("here", settings);
-    // setLocalStorage("settingsType", "custom");
-    // setLocalStorage("settings", JSON.stringify(settings));
+    setLocalStorage("settingsType", "custom");
+    setLocalStorage("settings", JSON.stringify(settings));
   }, [settings]);
 
   return (
