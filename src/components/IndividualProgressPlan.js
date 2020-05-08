@@ -78,7 +78,7 @@ const IndividualProgressPlan = () => {
           filter((line) => line.assign.includes(selectedUser))
         )(currentWeekTask);
 
-        const format = (string) => (string !== undefined ? `${string}\n` : "");
+        const format = (string) => (string !== undefined ? `${string}` : "");
 
         const buildShipped = shippedStatus.reduce((acc, status) => {
           if (groupByStatus[status]) {
@@ -102,7 +102,7 @@ const IndividualProgressPlan = () => {
         }, "");
 
         setResult(
-          `:ship: *Shipped*\n${buildShipped}\n\n:rocket: *Progress*\n${buildProgress}\n\n:airplane: *Plan*\n${buildPlan}\n\n:exploding_head: *Problem*\n> - `
+          `:ship: *Shipped*\n${buildShipped}\n:rocket: *Progress*\n${buildProgress}\n:airplane: *Plan*\n${buildPlan}\n:exploding_head: *Problem*\n> - `
         );
       }
     }

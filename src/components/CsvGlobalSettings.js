@@ -255,7 +255,6 @@ const CsvGlobalSettings = () => {
           <Grid item xs={6}>
             A task is current week if
           </Grid>
-          {console.log(settings.currentWeek)}
           <Grid item xs={6}>
             {csvKeys.length > 0 && (
               <Select

@@ -26,13 +26,11 @@ const useStyles = makeStyles(() => ({
 
 const SettingsLineStructure = ({ type }) => {
   const { settings, setSettings } = useContext(StateContext);
-  console.log(settings);
   const { teammates, status, category } = path([type, "lineFormat"], settings);
 
   const classes = useStyles();
 
   const updateLineFormat = (key, value) => {
-    console.log(key, value);
     return setSettings({
       ...settings,
       [type]: {

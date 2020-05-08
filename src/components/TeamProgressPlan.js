@@ -58,20 +58,19 @@ const TeamProgressPlan = () => {
         csvData
       );
 
-      const groupByStatus = compose(
-        // map(currentStatus => pluck("asString", currentStatus).join("\n")),
+      const groupByCategory = compose(
         map((currentStatus) =>
           compose(
             map((currentProject) =>
               pluck("asString", currentProject).join("\n")
             ),
-            groupBy((line) =>
-              line[groupLineBy] !== "" ? line[groupLineBy] : "Divers"
-            ),
-            sortBy((line) => line[groupLineBy])
+            groupBy((line) => line[statusKey]),
+            sortBy((line) => line[statusKey])
           )(currentStatus)
         ),
-        groupBy((line) => line[statusKey]),
+        groupBy((line) =>
+          line[groupLineBy] !== "" ? line[groupLineBy] : "Divers"
+        ),
         map((line) => {
           return {
             ...line,
@@ -82,30 +81,30 @@ const TeamProgressPlan = () => {
 
       const format = (string) => (string !== undefined ? `${string}\n` : "");
 
-      const buildProgress = progressStatus.reduce((acc, status) => {
-        if (groupByStatus[status]) {
-          acc += Object.keys(groupByStatus[status]).reduce((acc, project) => {
-            acc += `\n*${project}*\n`;
-            if (groupByStatus[status][project]) {
-              acc += format(groupByStatus[status][project]);
+      const buildPart = (groupByCategory, selectedStatus) => {
+        return Object.keys(groupByCategory).reduce((acc, category) => {
+          if (groupByCategory[category]) {
+            if (
+              Object.keys(groupByCategory[category]).some((status) =>
+                selectedStatus.includes(status)
+              )
+            ) {
+              acc += `\n*${category}*\n`;
             }
-            return acc;
-          }, "");
-        }
-        return acc;
-      }, "");
-      const buildPlan = planStatus.reduce((acc, status) => {
-        if (groupByStatus[status]) {
-          acc += Object.keys(groupByStatus[status]).reduce((acc, project) => {
-            acc += `\n*${project}*\n`;
-            if (groupByStatus[status][project]) {
-              acc += format(groupByStatus[status][project]);
-            }
-            return acc;
-          }, "");
-        }
-        return acc;
-      }, "");
+
+            acc += selectedStatus.reduce((acc, status) => {
+              if (groupByCategory[category][status]) {
+                acc += format(groupByCategory[category][status]);
+              }
+              return acc;
+            }, "");
+          }
+          return acc;
+        }, "");
+      };
+
+      const buildProgress = buildPart(groupByCategory, progressStatus);
+      const buildPlan = buildPart(groupByCategory, planStatus);
 
       setResult(
         `:rocket: *Progress*\n${buildProgress}\n\n:airplane: *Plan*\n${buildPlan}\n\n:exploding_head: *Problem*\n> - `
