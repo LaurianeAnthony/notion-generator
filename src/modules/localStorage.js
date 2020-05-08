@@ -4,6 +4,7 @@ export const KEYS = {
   status: "status",
   title: "title",
   teammates: "teammates",
+  category: "category",
 };
 
 export const setLocalStorage = (key, value) =>

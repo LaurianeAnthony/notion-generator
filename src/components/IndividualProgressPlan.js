@@ -72,7 +72,7 @@ const IndividualProgressPlan = () => {
           map((line) => {
             return {
               ...line,
-              asString: buildLine(line, "i3p", settings),
+              asString: buildLine(line, "i3p", settings) + "\n",
             };
           }),
           filter((line) => line.assign.includes(selectedUser))

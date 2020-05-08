@@ -98,6 +98,10 @@ const DISPLAY_KEYS = [
     id: KEYS.teammates,
     label: "Team mates key",
   },
+  {
+    id: KEYS.category,
+    label: "Category key",
+  },
 ];
 
 const CsvGlobalSettings = () => {
