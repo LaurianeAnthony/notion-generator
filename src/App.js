@@ -8,7 +8,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Layout from "./components/shared/Layout";
 import CsvDropzonePage from "./components/CsvDropzonePage";
 import CsvGlobalSettings from "./components/CsvGlobalSettings";
-import Weekly from "./components/Weekly";
 import IndividualProgressPlan from "./components/IndividualProgressPlan";
 import TeamProgressPlan from "./components/TeamProgressPlan";
 import { setLocalStorage, getLocalStorage } from "./modules/localStorage";
@@ -88,11 +87,6 @@ function App() {
                 <Route path="/teamprogressplan">
                   <Layout appBar>
                     <TeamProgressPlan />
-                  </Layout>
-                </Route>
-                <Route path="/weekly">
-                  <Layout appBar>
-                    <Weekly />
                   </Layout>
                 </Route>
               </Switch>
