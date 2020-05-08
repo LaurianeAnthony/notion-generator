@@ -12,6 +12,7 @@ export const SOCIAL = {
   status: "status",
   title: "name",
   teammates: "assign",
+  category: "feature",
   currentWeek: {
     key: "this_week",
     value: "Yes",
@@ -40,7 +41,7 @@ export const SOCIAL = {
     lineFormat: {
       teammates: true,
       status: true,
-      category: true,
+      category: false,
     },
   },
 };
@@ -71,7 +72,7 @@ export const AFFILIATES = {
     lineFormat: {
       teammates: true,
       status: true,
-      category: true,
+      category: false,
     },
   },
 };

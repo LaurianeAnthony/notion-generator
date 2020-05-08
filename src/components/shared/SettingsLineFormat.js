@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SettingsLineStructure = ({ type }) => {
+const SettingsLineFormat = ({ type }) => {
   const { settings, setSettings } = useContext(StateContext);
   const { teammates, status, category } = path([type, "lineFormat"], settings);
 
@@ -43,7 +43,7 @@ const SettingsLineStructure = ({ type }) => {
   return (
     <div>
       <h4 className={classes.subTitle}>
-        Line structure <small>What do you want to display ?</small>
+        Line format <small>What do you want to display ?</small>
       </h4>
 
       <FormControlLabel
@@ -90,4 +90,4 @@ const SettingsLineStructure = ({ type }) => {
   );
 };
 
-export default SettingsLineStructure;
+export default SettingsLineFormat;

@@ -12,7 +12,7 @@ import {
   buildLine,
 } from "../modules/csvFormater";
 import ResultZone from "./shared/ResultZone";
-import SettingsLineStructure from "./shared/SettingsLineStructure";
+import SettingsLineFormat from "./shared/SettingsLineFormat";
 import { StateContext } from "../App";
 
 const useStyles = makeStyles(() => ({
@@ -141,7 +141,7 @@ const TeamProgressPlan = () => {
         <Grid className={classes.settingsGrid} item xs={12} md={5}>
           <h3>Settings</h3>
 
-          <SettingsLineStructure type="t3p" />
+          <SettingsLineFormat type="t3p" />
 
           <h4 className={classes.subTitle}>Group by</h4>
 

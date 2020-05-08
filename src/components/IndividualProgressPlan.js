@@ -12,7 +12,7 @@ import {
   buildLine,
 } from "../modules/csvFormater";
 import ResultZone from "./shared/ResultZone";
-import SettingsLineStructure from "./shared/SettingsLineStructure";
+import SettingsLineFormat from "./shared/SettingsLineFormat";
 import { StateContext } from "../App";
 
 const useStyles = makeStyles(() => ({
@@ -154,7 +154,7 @@ const IndividualProgressPlan = () => {
         <Grid className={classes.settingsGrid} item xs={12} md={5}>
           <h3>Settings</h3>
 
-          <SettingsLineStructure type="i3p" />
+          <SettingsLineFormat type="i3p" />
 
           <h4 className={classes.subTitle}>
             Layout <small>Select status to display</small>

@@ -74,14 +74,11 @@ const useStyles = makeStyles((theme) => ({
   },
   defaultSettingsBox: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
   },
-  ButtonsWrapper: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
+  defaultSettingsLink: {
+    margin: "0 5px",
   },
 }));
 
@@ -181,6 +178,7 @@ const CsvGlobalSettings = () => {
             onComplete={() => {
               setCsvData(csvAsObject());
               setCsvKeys(csvAsKeys());
+              setDisplayCsvDropzone(false);
             }}
             classes={classes}
             small
@@ -191,40 +189,28 @@ const CsvGlobalSettings = () => {
         <h2 className={classes.title}>Global settings </h2>
 
         <div className={classes.defaultSettingsBox}>
-          <p>
-            Use a default settings{" "}
-            <MuiLink
-              href="#"
-              color="secondary"
-              onClick={() => {
-                setLocalStorage("settingsType", "custom");
-                // setDisplayCustomSettings(true);
-              }}
-            >
-              or customize
-            </MuiLink>
-          </p>
-
-          <div className={classes.ButtonsWrapper}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setDefaultSettings("affiliates");
-              }}
-            >
-              Affiliates settings
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setDefaultSettings("social");
-              }}
-            >
-              Social settings
-            </Button>
-          </div>
+          <p>Complete with default settings for: </p>
+          <MuiLink
+            href="#"
+            className={classes.defaultSettingsLink}
+            color="secondary"
+            onClick={() => {
+              setDefaultSettings("affiliates");
+            }}
+          >
+            Affiliates
+          </MuiLink>{" "}
+          /
+          <MuiLink
+            href="#"
+            className={classes.defaultSettingsLink}
+            color="secondary"
+            onClick={() => {
+              setDefaultSettings("social");
+            }}
+          >
+            Social
+          </MuiLink>
         </div>
 
         <Grid container>
